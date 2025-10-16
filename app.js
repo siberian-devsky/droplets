@@ -10,7 +10,7 @@ function createDrop() {
     const head = document.createElement("div");
 
     const tails = [];
-    const randomTailLength = Math.floor(Math.random() * 10) //max 10
+    const randomTailLength = Math.floor(Math.random() * 10) + 3 // 3-12
 
     for (let i = 0; i <= randomTailLength; i++) {
         const tail = document.createElement("div");
@@ -25,39 +25,38 @@ function createDrop() {
     // assemble
     tails.forEach( tail => droplet.appendChild(tail));
     droplet.appendChild(head);
-
-    //random position inside the mainWindow
+    
+    // random position inside the mainWindow
     const width = mainWindow.clientWidth - 10;
     const xPos = Math.floor(Math.random() * width)
-
+    
+    // starting line
     droplet.style.left = `${xPos}px`;
-    droplet.style.transform = "translateY(-25px)";
+    droplet.style.transform = "translateY(-125px)";
     droplet.style.position = "absolute";
-
-    // ship it
+    
+    // attach to DOM
     mainWindow.appendChild(droplet)
+
     requestAnimationFrame( () => {
-        mainWindow.clientHeight + 40
         droplet.style.transition = `transform ${getRandomFallRate()}s linear`;
+
+        // finish line
         droplet.style.transform = `translateY(${mainWindowCoords.bottom + dropletHeight}px)`;
     })
     
     // kill it when out of frame
-    setTimeout(
-        droplet.addEventListener("transitionend", () => {
-            droplet.remove()
-    }), 5000)
+    droplet.addEventListener("transitionend", () => droplet.remove)
 }
 
 function fallDown() {
-    console.log("falling");
     setInterval(() => {
         createDrop();
-    }, 1000);
+    }, 100);
 }
 
 function getRandomFallRate() {
-      return (Math.random() * 3 + 1).toFixed(2); // 1s–4s
+      return (Math.random() * 5 + 2).toFixed(2); // 1s–4s
 }
 
-mainWindow.addEventListener("click", fallDown);
+document.addEventListener("DOMContentLoaded", fallDown);
