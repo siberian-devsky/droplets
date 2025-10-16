@@ -43,20 +43,33 @@ function createDroplet() {
 
     requestAnimationFrame( () => {
         const transitionProps = getTransitionProps(tailSegments.length);
-        droplet.style.transition = `transform ${transitionProps.fallRate}s ${transitionProps.timingFunc}`;
+
+        // grab transit values
+        const fallRate = transitionProps.fallRate;
+        const timingFunc = transitionProps.timingFunc;
+
+        // apply them
+        droplet.style.transition = `transform ${fallRate}s ${timingFunc}`;
+        
+        // calculate wag terminationt time
+        const duration = 150;
+        const iterCount = Math.floor((fallRate * 1000) / duration);
+        
+        // apply them
+        tail.style.animation = `wag ${duration}ms ease-in-out ${iterCount} alternate`;
 
         // finish line
         droplet.style.transform = `translateY(${mainWindowCoords.bottom + dropletHeight}px)`;
     })
     
-    // kill it when out of frame
-    droplet.addEventListener("transitionend", () => droplet.remove)
+    // kill droplet node after fall
+    tail.addEventListener("animationend", () => droplet.remove())
 }
 
 function fallDown() {
     setInterval(() => {
         createDroplet();
-    }, 225);
+    }, 300);
 }
 
 function getTransitionProps(tailLength) {
@@ -77,4 +90,5 @@ function getTransitionProps(tailLength) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", fallDown);
+// document.addEventListener("DOMContentLoaded", fallDown);
+mainWindow.addEventListener("click", fallDown);

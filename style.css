@@ -24,32 +24,46 @@ body {
     background-color: rgb(0, 0, 0);
     overflow: hidden;
     position: relative;
+    transform: rotateZ(-90deg);
 }
+
+/* main drop container */
 .droplet {  
     position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 2px;
     width: var(--drop-head-square);
-    transition: transform 2s linear;
 }
+
+/* tail + animation */
 .tail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
     transform-origin: bottom center;
-    animation: wag 200ms ease-in-out infinite alternate;
 }
 .tSegment {
     background-color: var(--drop-tail-color);
     width: var(--drop-tail-square);
     height: var(--drop-tail-square);
+    border-radius: 50%;
 }
 @keyframes wag {
-    0% {transform: rotate(10deg);}
-    100% {transform: rotate(-10deg);}
+    0% {transform: rotate(7deg);}
+    100% {transform: rotate(-7deg);}
 }
+/* end tail */
+
 .head {
     background-color: var(--drop-head-color);
-    width: var(--drop-head-square);
-    height: var(--drop-head-square);
+    /* width: var(--drop-head-square);
+    height: var(--drop-head-square); */
+    width: 10px;
+    height: 15px;
+    border-radius: 50%;
 }
