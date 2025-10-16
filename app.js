@@ -7,23 +7,26 @@ const dropletHeight = 45;
 function createDroplet() {
    // just the divs
     const droplet = document.createElement("div");
+    const tail = document.createElement("div");
     const head = document.createElement("div");
 
-    const tails = [];
+    const tailSegments = [];
     const randomTailLength = Math.floor(Math.random() * 10) + 3 // 3-12
 
     for (let i = 0; i <= randomTailLength; i++) {
-        const tail = document.createElement("div");
-        tail.className = "tail";
-        tails.push(tail);
+        const tSegment = document.createElement("div");
+        tSegment.className = "tSegment";
+        tailSegments.push(tSegment);
     }
 
     // add classes
     droplet.className = "droplet";
+    tail.className = "tail";
     head.className = "head";
 
     // assemble
-    tails.forEach( tail => droplet.appendChild(tail));
+    tailSegments.forEach( segment => tail.appendChild(segment));
+    droplet.appendChild(tail);
     droplet.appendChild(head);
     
     // random position inside the mainWindow
@@ -39,7 +42,7 @@ function createDroplet() {
     mainWindow.appendChild(droplet)
 
     requestAnimationFrame( () => {
-        const transitionProps = getTransitionProps(tails.length);
+        const transitionProps = getTransitionProps(tailSegments.length);
         droplet.style.transition = `transform ${transitionProps.fallRate}s ${transitionProps.timingFunc}`;
 
         // finish line
@@ -53,7 +56,7 @@ function createDroplet() {
 function fallDown() {
     setInterval(() => {
         createDroplet();
-    }, 75);
+    }, 225);
 }
 
 function getTransitionProps(tailLength) {

@@ -36,12 +36,20 @@ body {
     transition: transform 2s linear;
 }
 .tail {
+    transform-origin: bottom center;
+    animation: wag 200ms ease-in-out infinite alternate;
+}
+.tSegment {
     background-color: var(--drop-tail-color);
     width: var(--drop-tail-square);
     height: var(--drop-tail-square);
+}
+@keyframes wag {
+    0% {transform: rotate(10deg);}
+    100% {transform: rotate(-10deg);}
 }
 .head {
     background-color: var(--drop-head-color);
     width: var(--drop-head-square);
     height: var(--drop-head-square);
-} 
+}
