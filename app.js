@@ -40,7 +40,11 @@ function createDroplet() {
 
     requestAnimationFrame( () => {
         const transitionProps = getTransitionProps(tails.length);
-        droplet.style.transition = `transform ${transitionProps.fallRate}s ${transitionProps.timingFunc}`;
+        const fallRate = transitionProps.fallRate;
+        const timingFunc = transitionProps.timingFunc;
+        const color = transitionProps.color;
+
+        droplet.style.transition = `transform ${fallRate}s ${timingFunc}`;
 
         // finish line
         droplet.style.transform = `translateY(${mainWindowCoords.bottom + dropletHeight}px)`;
@@ -57,9 +61,14 @@ function fallDown() {
 }
 
 function getTransitionProps(tailLength) {
+    const fallRate = ((Math.random() * 5) + 2).toFixed(2) // 1s–4s
+    const timingFunc = tailLength % 2 === 0 ? "ease" : "linear"
+    const color = timingFunc === "linear" ? "red" : "blue"
+    
     const transition = {
-        fallRate: ((Math.random() * 5) + 2).toFixed(2), // 1s–4s
-        timingFunc: tailLength % 2 === 0 ? "ease" : "linear"
+        fallRate: fallRate,
+        timingFunc: timingFunc,
+        color: color
     }
 
     if (typeof transition.fallRate === Number
@@ -69,7 +78,8 @@ function getTransitionProps(tailLength) {
     } else {
         return {
             fallRate: 3,
-            timingFunc: "ease"
+            timingFunc: "ease",
+            color: color
         }
     }
 }
